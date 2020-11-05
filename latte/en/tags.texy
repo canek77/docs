@@ -268,13 +268,27 @@ Loops `{foreach}`, `{for}`, `{while}`  .{toc: Loops}
 {/for}
 ```
 
+The `foreach` loop can take an optional `{else}` clause whose text is displayed if the given array is empty: (since v2.9)
+
+```html
+<ul>
+    {foreach $people as $person}
+        <li>{$person->name}</li>
+    {else}
+        <li><em>Sorry, no users in this list</em></li>
+    {/foreach}
+</ul>
+```
+
 Inside the `foreach` loop the `$iterator` variable is initialized. It holds important information about the current loop. [Its API |api:Latte\Runtime\CachingIterator] features iteration counter and methods identifying odd, even, first and last iteration:
 
 - `isFirst()` - is this the first iteration?
 - `isLast()` - is this the last iteration?
 - `getCounter()` - iteration counter, starts from 1
+- `getCounter0()` - iteration counter, starts from 0 (since v2.9)
 - `isOdd()` - is this iteration odd?
 - `isEven()` - is this iteration even?
+- `getParent()` - the iterator surrounding the current one (since v2.9)
 
 Object behind the `$iterator` variable has [Nette\SmartObject trait characteristics |doc:smartobject#properties-getters-and-setters], that's why you can write `$iterator->first` instead of `$iterator->isFirst()` and alike. For example:
 

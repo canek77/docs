@@ -268,13 +268,27 @@ Cykly `foreach`, `for` a `while` se chovají stejně, jako jejich protějšky v 
 {/for}
 ```
 
+Cyklus `foreach` může mít volitelnou klauzuli `{else}`, jejíž text se zobrazí, pokud je dané pole prázdné: (od verze 2.9)
+
+```html
+<ul>
+    {foreach $people as $person}
+        <li>{$person->name}</li>
+    {else}
+        <li><em>Litujeme, v tomto seznamu nejsou žádní uživatelé</em></li>
+    {/foreach}
+</ul>
+```
+
 Uvnitř cyklu `foreach` je inicializovaná proměnná `$iterator`, díky které můžeme zjišťovat užitečné informace o probíhajícím cyklu. [Její API |api:Latte\Runtime\CachingIterator] disponuje čítačem průchodů a metodami zjišťujícími, zda je aktuální průchod sudý, lichý, první nebo poslední:
 
 - `isFirst()` - prochází se cyklem poprvé?
 - `isLast()` - jde o poslední průchod?
 - `getCounter()` - čítač průchodů cyklem počítaný od jedničky
+- `getCounter0()` - čítač průchodů cyklem počítaný od nuly (od v2.9)
 - `isOdd()` - jde o lichý průchod?
 - `isEven()` - jde o sudý průchod?
+- `getParent()` - iterátor obklopující aktuální (od v2.9)
 
 Objekt `$iterator` má [vlastnosti traity Nette\SmartObject |doc:smartobject#properties-gettery-a-settery], proto lze místo `$iterator->isFirst()` psát `$iterator->first` a podobně. Příklad:
 
